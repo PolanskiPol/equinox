@@ -1,10 +1,10 @@
-@icon("ipawn.svg")
-class_name Pawn
-## Base class for all Pawns.
-## A Pawn is a [Node] that can be controlled by either a player or AI. 
+@icon("ipawn_3d.svg")
+class_name Pawn3D
+## Base class for all 3D Pawns.
+## A Pawn is a [Node3D] that can be controlled by either a player or AI. 
 ## A pawn must never take input, it must only process the [ControlContext], act according to its values, and sometimes write in it to communicate with the [Controller].
-## All Pawns must extend from this base class.
-extends Node
+## All 3D Pawns must extend from this base class.
+extends Node3D
 
 ## Associated [ControlContext]
 ## The [ControlContext] acts as a shared resource of values where the [Controller] modifies them and the Pawn reads them to add functionality.

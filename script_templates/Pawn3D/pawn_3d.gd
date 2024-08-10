@@ -4,7 +4,7 @@
 # meta-space-indent: 4
 
 class_name _CLASS_
-extends Pawn
+extends Pawn3D
 
 # Virtual function. Called on input.
 # Override to add your behaviour.

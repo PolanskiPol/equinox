@@ -3,6 +3,7 @@
 # meta-default: true
 # meta-space-indent: 4
 
+@tool
 class_name _CLASS_
 extends Controller
 

@@ -1,3 +1,4 @@
+@tool
 @icon("icontroller.svg")
 class_name Controller
 ## Base class for all Controllers.
@@ -6,7 +7,12 @@ class_name Controller
 extends Node
 
 ## [Pawn] controlled by the Controller.
-@export var pawn : Pawn
+@export var pawn : Node :
+	set(new_pawn):
+		if(new_pawn is Pawn2D == false and new_pawn is Pawn3D == false): 
+			push_warning("pawn must be Pawn2D or Pawn3D, not setting new pawn")
+			return
+		pawn = new_pawn
 
 ## Associated [ControlContext].
 ## The [ControlContext] acts as a shared resource of values where the Controller modifies them and the [Pawn] reads them to add functionality.
@@ -21,7 +27,7 @@ func _ready() -> void:
 		posess(pawn)
 	
 ## Assigns a pawn to interact with.
-func posess(pawn : Pawn) -> void:
+func posess(pawn : Variant) -> void:
 	if(!pawn.is_available()): return
 	if(pawn != null):
 		pawn.free_control()
