@@ -6,21 +6,21 @@ class_name Controller
 ## To interact with its [member pawn], the controller must write and read the [member context].
 extends Node
 
-## [Pawn] controlled by the Controller.
+signal pawn_posessed(pawn : Node)
+signal pawn_unposessed(pawn : Node)
+
+## [Pawn2D] or [Pawn3D] controlled by the Controller.
 @export var pawn : Node :
 	set(new_pawn):
-		if(new_pawn is Pawn2D == false and new_pawn is Pawn3D == false): 
+		if(new_pawn is Pawn2D == false and new_pawn is Pawn3D == false and new_pawn != null): 
 			push_warning("pawn must be Pawn2D or Pawn3D, not setting new pawn")
 			return
 		pawn = new_pawn
-
+		
 ## Associated [ControlContext].
 ## The [ControlContext] acts as a shared resource of values where the Controller modifies them and the [Pawn] reads them to add functionality.
-## Must be set in every class that inherits Controller, inside the method [method _init].
-var context : ControlContext
-
-func _init() -> void:
-	context = ControlContext.new()
+@export var control_context : ControlContext
+	
 	
 func _ready() -> void:
 	if(pawn != null):
@@ -33,11 +33,20 @@ func posess(pawn : Variant) -> void:
 		pawn.free_control()
 	pawn.set_control(self)
 	self.pawn = pawn
+	pawn_posessed.emit(pawn)
 	
 ## Liberates pawn.
 func unposess() -> void:
+	if(pawn == null):
+		return
 	pawn.free_control()
+	pawn_posessed.emit(pawn)
 	pawn = null
+	
+## Virtual function, called on ready.
+## Override to add your behaviour.
+func ready() -> void:
+	pass
 	
 ## Virtual function, called on the associated [member pawn].
 ## Override to add your behaviour.

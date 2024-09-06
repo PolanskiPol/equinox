@@ -1,10 +1,12 @@
-@icon("ipawn_3d.svg")
-class_name Pawn3D
-## Base class for all 3D Pawns.
-## A Pawn3D is a [Node3D] that can be controlled by either a player or AI. 
-## Pawns must never take input, it must only process the [ControlContext], act according to its values, and sometimes write in it to communicate with the [Controller].
-## All 3D Pawns must extend from this base class.
-extends Node3D
+@icon("ipawn.svg")
+class_name Pawn
+## @experimental
+## NOTE: This class is still experimental and is not used in this version.
+##
+## Component used both in Pawn2D and Pawn3D.
+## Pawn2D and Pawn3D extend from different classes but require the same functionality.
+## To prevent code repetition, this component is added to both Pawn2D and Pawn3D to add the needed functionality.
+extends Node
 
 ## Associated [ControlContext]
 ## The [ControlContext] acts as a shared resource of values where the [Controller] modifies them and the Pawn reads them to add functionality.
@@ -17,16 +19,11 @@ var _controller : Controller
 func set_control(controller : Controller):
 	if(_controller != null): return
 	_controller = controller
-	context = controller.control_context
+	context = controller.context
 	
 func free_control() -> void:
 	_controller = null
 	context = null
-	
-## Virtual function. Called on ready.
-## Override to add your behaviour.
-func ready() -> void:
-	pass
 	
 ## Virtual function. Called on input.
 ## Override to add your behaviour.
@@ -46,9 +43,6 @@ func physics_process(delta : float) -> void:
 ## If it has no [member _controller] set, the Pawn is available.
 func is_available() -> bool:
 	return _controller == null
-	
-func _ready() -> void:
-	ready()
 	
 func _input(event: InputEvent) -> void:
 	if(_controller != null):
