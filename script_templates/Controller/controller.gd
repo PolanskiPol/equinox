@@ -11,7 +11,7 @@ extends Controller
 # Override to add your behaviour.
 func ready() -> void:
 	pass
-
+	
 # Virtual function, called on the associated [member pawn].
 # Override to add your behaviour.
 func input(event: InputEvent) -> void:

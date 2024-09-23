@@ -29,6 +29,7 @@ signal pawn_unposessed(pawn : Node)
 	
 	
 func _ready() -> void:
+	ready()
 	if(pawn != null):
 		posess(pawn)
 	
